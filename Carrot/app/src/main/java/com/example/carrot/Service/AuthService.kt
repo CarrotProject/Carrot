@@ -23,7 +23,7 @@ interface AuthService {
         @Field("phone") phone: String,
         @Field("password") password: String,
         @Field("auth") auth: String
-    ): Call<ResponseBody>
+    ): Call<Data>
 
     @FormUrlEncoded
     @POST("api/user/login")

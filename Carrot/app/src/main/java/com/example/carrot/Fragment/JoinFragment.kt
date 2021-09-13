@@ -140,7 +140,6 @@ class JoinFragment : Fragment(R.layout.fragment_join) {
         val password = etPassword.text.toString()
         //val callUser = joinService.isSighUp(phoneNum)
 
-        Log.d("test","Next Button Clicked")
         moveNext(name, phoneNum, password)
     }
 
@@ -149,16 +148,16 @@ class JoinFragment : Fragment(R.layout.fragment_join) {
 
             val join = joinService.signUp(name, phoneNum, password, "ROLE_ADMIN,ROLE_USER")
 
-            join.enqueue(object: Callback<ResponseBody> {
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+            join.enqueue(object: Callback<Data> {
+                override fun onResponse(call: Call<Data>, response: Response<Data>) {
                     if(response.isSuccessful) {
-                        Log.d("test", "${response.body()!!.string()}")
+                        Log.d("test", "${response.body()!!.successString}")
                         finish()
                     }
                 }
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.d("onFailure", "$t")
+                override fun onFailure(call: Call<Data>, t: Throwable) {
+                    Log.e("onFailure", "$t")
                 }
             })
 

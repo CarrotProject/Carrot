@@ -6,6 +6,9 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
+import com.example.carrot.Fragment.JoinFragment
 import com.example.carrot.Network.RetrofitClient
 import com.example.carrot.R
 import com.example.carrot.Response.UserResponse
@@ -35,9 +38,7 @@ class LogInActivity : AppCompatActivity() {
 
     private fun initView() {
         btnLogIn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        //login()
+            login()
         }
 
         tvJoin.setOnClickListener {
@@ -55,21 +56,22 @@ class LogInActivity : AppCompatActivity() {
         val password = etLogInPassword.text.toString()
 
         val callUser = loginService.login(phone, password)
-        callUser.enqueue(object: Callback <List<UserResponse>> {
-            override fun onResponse(call: Call<List<UserResponse>>, response: Response<List<UserResponse>>) {
+        callUser.enqueue(object: Callback <Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if(response.isSuccessful && response.code() == ResponseCode.SUCCESS_POST) {
 
-                    Log.d("LogInActivity: login(): onResponse:: ", "SUCCESS, ${response.body().toString()}")
+                    Log.d("LogInActivity: login(): onResponse:: ", "SUCCESS")
                 }
             }
-            override fun onFailure(call: Call<List<UserResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<Void>, t: Throwable) {
                 Log.d("LogInActivity: login(): onFailure:: ", "$t")
             }
         })
     }
 
     private fun join() {
-        val intent = Intent(this, JoinActivity::class.java)
+        intent = Intent(this, JoinActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }

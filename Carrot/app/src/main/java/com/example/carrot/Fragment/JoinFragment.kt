@@ -1,5 +1,6 @@
 package com.example.carrot.Fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -54,8 +55,11 @@ class JoinFragment : Fragment(R.layout.fragment_join) {
         joinToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.joinToolbarFinish -> {
-                    checkUser()
-                    activity?.finish()
+                    if (!etPhoneNum.text.isNullOrEmpty() && !etName.text.isNullOrEmpty() && !etPassword.text.isNullOrEmpty()) {
+                        checkUser()
+                    } else {
+                        setError()
+                    }
                     true
                 }
                 else -> {
@@ -65,6 +69,8 @@ class JoinFragment : Fragment(R.layout.fragment_join) {
         }
         joinToolbar.setNavigationOnClickListener {
             activity?.finish()
+            val intent = Intent(context, LogInActivity::class.java)
+            startActivity(intent)
         }
     }
 

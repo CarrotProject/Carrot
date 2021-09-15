@@ -30,6 +30,6 @@ interface AuthService {
     fun login(
         @Field("phone") phone: String,
         @Field("password") password: String
-    ): Call<List<UserResponse>>
+    ): Call<Void>
 }
 
